@@ -1,0 +1,207 @@
+<openerp>
+    <data>
+        <!--Create Dimension Menus and Views under Settings-->
+        <record model = 'ir.ui.view' id = 'general_ledger_reporting_levels_form'>
+            <field name = 'name'>General Ledger Reporting</field>
+            <field name = 'model'>dimensions.reporting.levels</field>
+            <field name = 'arch' type = 'xml'>
+                <form>
+                    <sheet>
+                        <field name = 'name'/>
+                        <field name = 'dimensions_mandatory'/>
+                        <group>
+                            <group>
+                                <field name = 'level1'/>
+                                <field name = 'level2'/>
+                                <field name = 'level3'/>
+                                <field name = 'level4'/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model = 'ir.ui.view' id = 'general_ledger_reporting_levels_tree_view'>
+            <field name = 'name'>Reporting Levels</field>
+            <field name = 'model'>dimensions.reporting.levels</field>
+            <field name = 'arch' type = 'xml'>
+                <tree>
+                    <field name = 'name'/>
+                    <field name = 'dimensions_mandatory'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model = 'ir.actions.act_window' id = 'reporting_levels_action'>
+            <field name = 'name'>General Ledger Reporting Levels</field>
+            <field name = 'res_model'>dimensions.reporting.levels</field>
+            <field name = 'view_type'>form</field>
+            <field name = 'view_mode'>tree,form</field>
+        </record>
+
+        <menuitem name = 'General Ledger Reporting' id = 'general_ledger_reporting_main_menu' parent = 'base.menu_config' sequence = "100"/>
+        <menuitem name = 'Reporting Levels' id = 'general_ledger_reporting_levels' parent = 'general_ledger_reporting_main_menu' action = 'reporting_levels_action' sequence = '10'/>
+
+        <!--Dimensions-->
+        <record model = 'ir.ui.view' id = 'dimensions_form_view'>
+            <field name = 'name'>Dimensions</field>
+            <field name = 'model'>dimensions</field>
+            <field name = 'arch' type = 'xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name = 'name'/>
+                                <field name = 'description'/>
+                                <field name = 'sequence'/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model = 'ir.ui.view' id = 'dimensions_tree_view'>
+            <field name = 'name'>Dimensions</field>
+            <field name = 'model'>dimensions</field>
+            <field name = 'arch' type = 'xml'>
+                <tree>
+                    <field name = 'name'/>
+                    <field name = 'description'/>
+                    <field name = 'sequence'/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record model = 'ir.actions.act_window' id = 'dimensions_action'>
+            <field name = 'name'>Dimensions</field>
+            <field name = 'res_model'>dimensions</field>
+            <field name = 'view_type'>form</field>
+            <field name = 'view_mode'>tree,form</field>
+        </record>
+
+        <menuitem name = 'Dimensions' id = 'dimensions' parent = 'general_ledger_reporting_main_menu' action = 'dimensions_action' sequence = '20'/>
+
+
+        <!--Dimension Values-->
+        <record model = 'ir.ui.view' id = 'dimension_values_form_view'>
+            <field name = 'name'>Dimension Values</field>
+            <field name = 'model'>dimension.values</field>
+            <field name = 'arch' type = 'xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name = 'dimension'/>
+                                <field name = 'name'/>
+                                <field name = 'sequence'/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model = 'ir.ui.view' id = 'dimension_values_tree_view'>
+            <field name = 'name'>Dimension Values</field>
+            <field name = 'model'>dimension.values</field>
+            <field name = 'arch' type = 'xml'>
+                <tree>
+                    <field name = 'dimension'/>
+                    <field name = 'name'/>
+                    <field name = 'sequence'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model = 'ir.actions.act_window' id = 'dimension_values_action'>
+            <field name = 'name'>Dimension Values</field>
+            <field name = 'res_model'>dimension.values</field>
+            <field name = 'view_type'>form</field>
+            <field name = 'view_mode'>tree,form</field>
+
+        </record>
+
+        <menuitem name = 'Dimension Values' id = 'dimension_values' parent = 'general_ledger_reporting_main_menu' action = 'dimension_values_action' sequence = '30'/>
+
+        <!--Begin Extensions to standard Odoo Documents-->
+        <!--Journal Items Extensions-->
+        <record model = 'ir.ui.view' id = 'account_move_line_reporting_levels'>
+          <field name = 'name'>journal.reporting.levels</field>
+          <field name = 'model'>account.move.line</field>
+          <field name = 'inherit_id' ref = "account.view_move_line_tree"/>
+          <field name = 'arch' type = 'xml'>
+            <xpath expr = "//field[@name='reconcile_ref']" position = "after">
+                <field name = "dimension1" string = "Dimension 1"/>
+                <field name = "dimension2" string = "Dimension 2"/>
+                <field name = "dimension3" string = "Dimension 3"/>
+                <field name = "dimension4" string = "Dimension 4"/>
+              </xpath>
+          </field>
+        </record>
+        <!--Journal Entries Extensions-->
+        <record model = 'ir.ui.view' id = 'account_move_lines_reporting_levels'>
+          <field name = 'name'>journal.reporting.levels</field>
+          <field name = 'model'>account.move</field>
+          <field name = 'inherit_id' ref = "account.view_move_form"/>
+          <field name = 'arch' type = 'xml'>
+            <xpath expr = "//tree[@string='Journal Items']" position = "after">
+                <field name = "dimension1" string = "Dimension 1"/>
+                <field name = "dimension2" string = "Dimension 2"/>
+                <field name = "dimension3" string = "Dimension 3"/>
+                <field name = "dimension4" string = "Dimension 4"/>
+              </xpath>
+          </field>
+        </record>
+
+        <!--Customer Invoice Extensions-->
+        <record model = 'ir.ui.view' id = 'account_invoice_reporting_levels'>
+          <field name = 'name'>journal.reporting.levels</field>
+          <field name = 'model'>account.invoice</field>
+          <field name = 'inherit_id' ref = "account.invoice_form"/>
+          <field name = 'arch' type = 'xml'>
+            <xpath expr = "//field[@name='account_id']" position = "after">
+                <field name = "dimension1" string = "Dimension 1"/>
+                <field name = "dimension2" string = "Dimension 2"/>
+                <field name = "dimension3" string = "Dimension 3"/>
+                <field name = "dimension4" string = "Dimension 4"/>
+              </xpath>
+          </field>
+        </record>
+
+        <!--Supplier Invoice Extensions-->
+        <record model = 'ir.ui.view' id = 'account_supplier_invoice_reporting_levels'>
+          <field name = 'name'>journal.reporting.levels</field>
+          <field name = 'model'>account.invoice</field>
+          <field name = 'inherit_id' ref = "account.invoice_supplier_form"/>
+          <field name = 'arch' type = 'xml'>
+            <xpath expr = "//field[@name='journal_id']" position = "after">
+                <field name = "dimension1" string = "Dimension 1"/>
+                <field name = "dimension2" string = "Dimension 2"/>
+                <field name = "dimension3" string = "Dimension 3"/>
+                <field name = "dimension4" string = "Dimension 4"/>
+              </xpath>
+          </field>
+        </record>
+
+        <!--Supplier Payments Extensions-->
+        <record model = 'ir.ui.view' id = 'account_supplier_payments_reporting_levels'>
+          <field name = 'name'>journal.reporting.levels</field>
+          <field name = 'model'>account.voucher</field>
+          <field name = 'inherit_id' ref = "account_voucher.view_vendor_payment_form"/>
+          <field name = 'arch' type = 'xml'>
+            <xpath expr = "//field[@name='name']" position = "after">
+                <field name = "dimension1" string = "Dimension 1"/>
+                <field name = "dimension2" string = "Dimension 2"/>
+                <field name = "dimension3" string = "Dimension 3"/>
+                <field name = "dimension4" string = "Dimension 4"/>
+              </xpath>
+          </field>
+        </record>
+    </data>
+</openerp>

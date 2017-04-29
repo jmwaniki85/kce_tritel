@@ -1,0 +1,108 @@
+<openerp>
+	<data>
+		<!--All Approvals code Views to be created here. Limited extensions expected-->
+
+		<!---->
+  		<record model = 'ir.ui.view' id = 'approval_templates_form_view'>
+  			<field name = 'name'>Approval Templates</field>
+  			<field name = 'model'>approval.template</field>
+  			<field name = 'arch' type = 'xml'>
+  				<form string = 'Approval Templates'>
+  					<sheet>
+  						<group>
+  							<field name = 'name'/>
+  							<field name = 'description'/>
+  							<field name = 'document_type'/>
+  							<field name = 'limit_type'/>
+  							<field name = 'additional_approvers'/>
+  							<field name = 'department'/>
+  							<field name = 'no_of_approvers'/>
+  						</group>
+  						<notebook>
+  							<page string = 'Additional Approvers'>
+  								<field name = 'additional_approver_ids'>
+  									<tree editable = 'bottom'>
+  										<field name = 'approver_id'/>
+  										<field name = 'minimum_amount'/>
+  										<field name = 'maximum_amount'/>
+  									</tree>
+  								</field>
+  							</page>
+  						</notebook>
+  					</sheet>
+  				</form>
+  			</field>
+  		</record>
+
+  		<record model = "ir.ui.view" id = "approval_templates_tree_view">
+		    <field name = "name">Approval Template</field>
+		    <field name = "model">approval.template</field>
+		    <field name = "arch" type = "xml">
+		      <tree string = "Approval Templates">
+		      	<field name = 'name'/>
+  				<field name = 'description'/>
+  				<field name = 'document_type'/>
+		      	<field name = 'enabled'/>
+		      </tree>
+		  </field>
+		</record>
+    <!--Approval Entry List-->
+    <record model = 'ir.ui.view' id = 'approval_entry_list'>
+         <field name = 'name'>Approvals</field>
+         <field name = 'model'>approval.entry</field>
+         <field name = 'arch' type = 'xml'>
+
+            <tree editable = 'false'>
+              <field name = 'document_no'/>
+              <!--<field name = 'sender_id'/>
+              <field name = 'approver_id'/>-->
+              <field name = 'sender'/>
+              <field name = 'approver'/>
+              <field name = 'sequence'/>
+              <field name = 'status'/>
+              <!--<field name = 'document_id'/>-->
+            </tree>
+
+
+          </field>
+        </record>
+
+      <!--Approval Entry Search View-->
+      <record model="ir.ui.view" id="approvals_search_view">
+            <field name="name">Approvals Search</field>
+            <field name="model">approval.entry</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="document_no"/>
+                    <field name="document_id"/>
+                </search>
+            </field>
+        </record>
+
+        <!--Approval Entry Action-->
+        <record model = 'ir.actions.act_window' id = 'approval_entry_list_action'>
+        <field name = 'name'>Approvals</field>
+        <field name = 'res_model'>approval.entry</field>
+        <field name = 'view_type'>form</field>
+        <field name = 'view-mode'>tree</field>
+        <field name="context">{'search_default_document_id': active_id}</field>
+
+      </record>
+
+		<!--Approvals Menus start here. They will be under configurations menu in Settings-->
+		<!---->
+		<record model = "ir.actions.act_window" id = "approval_templates_list_action">
+	      <field name ="name">Approval Templates</field>
+	      <field name ="res_model">approval.template</field>
+        <field name ="view_type">form</field>
+	      <field name ="view-mode">tree,form</field>
+	      <field name ="help" type ="html">
+	        <p class ="oe_view_nocontent_create">Approval templates are used for document workflow</p>
+	        <p>Create approval templates and a schedule of approvers to enforce workflow in office</p>
+	        <p>activities. This design is by Tritel Technologies</p>
+	      </field>
+  	  </record>
+  	  <menuitem name = "Approval Templates" id = "approvals_main_menu" parent = "base.menu_config" action = 'approval_templates_list_action'/>
+
+	</data>
+</openerp>

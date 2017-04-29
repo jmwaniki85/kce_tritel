@@ -1,0 +1,72 @@
+<openerp>
+	<data>
+		<!--Customer Receipts Report-->
+		<report
+			id = "customer_receipts"
+			model = "account.voucher"
+			string = "Customer Receipt"
+			report_type = "qweb-pdf"
+			name = "tritel.madiba_customer_receipt"
+			file = "tritel.report_madiba_customer_receipts"
+			attachment_use = "True"
+		 />
+
+
+		 <template id = "madiba_customer_receipt">
+			<t t-call = "report.html_container">
+				<t t-call = "report.external_layout">
+					<div class = "page">
+						<center>
+							<table style="border:2px;">
+							<tr>
+								<td>Address Line Here</td>
+							</tr>
+							<tr>
+								<td>Phone: 555-555-5555555</td>
+							</tr>
+							<tr>
+								<td>Fax:123-123-12356</td>
+							</tr>
+							<tr>
+								<td>Email: abc@example.com</td>
+							</tr>
+							<tr>
+								<td>Website: www.websiteaddress.com</td>
+							</tr>
+							</table><br/>
+						</center>
+							<center style="font-size:20px;">CASH RECEIPT</center>
+							<br/>
+					<b>Cash Receipt # : 123456789</b><em style="margin-left:50%">Date: DD/MM/YYYY</em><br/>
+					<br/>
+					<b>Cash Received From </b><em style="margin-left:40%">of </em><br/><br/>
+					<b>For </b><br/><br/>
+					<table style="float: right;width: 150px;height: 75px;margin: 10px;border: 3px solid #73AD21;">
+						<tr>
+								<td>Total Amount Due</td>
+								<td></td>
+						</tr>
+						<tr>
+								<td>Amount Received</td>
+								<td></td>
+						</tr>
+						<tr>
+								<td>Balance Due</td>
+								<td></td>
+						</tr>
+					</table>
+					<br/><br/><br/><p>Payment Received in:</p>
+					<table style="border:2px;">
+						<tr><td>Cash</td><td>__</td></tr>
+						<tr><td>Cheque</td><td>__</td></tr>
+						<tr><td>Other</td><td>__</td></tr>
+					</table>
+							<em style="margin-top:-5px; float:right;">__________________________________</em>
+							<em style="margin-top:-5px; float:right;">Signed By</em>
+
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

@@ -1,1 +1,2 @@
-# kce_tritel
+# tritel
+Tritel General Extensions

@@ -1,0 +1,14 @@
+<openerp>
+    <data>
+        <record model = 'ir.ui.view' id = 'tritel_account_invoice'>
+            <field name = 'name'>Items on Invoice Header</field>
+            <field name = 'model'>account.invoice</field>
+            <field name = 'inherit_id' ref = 'account.invoice_form'/>
+            <field name = 'arch' type = 'xml'>
+                <xpath expr = "//field[@name='partner_id']" position = "after">
+                    <field name = 'items'/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

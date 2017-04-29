@@ -1,0 +1,84 @@
+<openerp>
+    <data>
+        <report
+            id = "invoice_statement"
+            model = "res.partner"
+            string = "Invoice Statements"
+            report_type = "qweb-pdf"
+            name = "tritel.invoice_statements"
+            file = "tritel.invoice_statements"
+            attachment_use = "True"
+         />
+
+
+        <template id = "invoice_statements">
+            <t t-call = "report.html_container">
+                <t t-foreach = "docs" t-as="doc">
+                    <t t-call = "report.external_layout">
+                        <div class = "page">
+                            <div class="row mt32 mb32">
+                                <div class="col-xs-3">
+                                    <p><strong>Customer:</strong></p>
+
+                                </div>
+                                <div class="col-xs-3">
+                                    <p t-field='doc.name'/>
+                                    <p t-field='doc.street'/>
+                                    <p t-field='doc.street2'/>
+                                    <p t-field='doc.city'/>
+                                    <span t-field="doc.phone"/><span t-field="doc.mobile"/><span t-field="doc.email"/>
+                                </div>
+
+                            </div>
+                            <h2>Invoices</h2>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr t-foreach="doc.invoice_ids" t-as='inv'>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Invoice:</td>
+                                                    <td><span t-field="inv.number"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Items:</td>
+                                                    <td><span t-field="inv.items"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <table class="table table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Transaction No.</th>
+                                                                <th>Date</th>
+                                                                <th>DR</th>
+                                                                <th>CR</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span t-field="inv.number"/></td>
+                                                                <td><span t-field="inv.date_invoice"/></td>
+                                                                <td><span t-field="inv.amount_total"/></td>
+                                                                <td>0.0</td>
+                                                            </tr>
+                                                            <tr t-foreach="inv.payment_ids" t-as="p">
+                                                                <td><span t-field="p.ref"/></td>
+                                                                <td><span t-field="p.date"/></td>
+                                                                <td><span t-field="p.debit"/></td>
+                                                                <td><span t-field="p.credit"/></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
